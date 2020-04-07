@@ -10,11 +10,19 @@
     android:paddingBottom="16dp"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btn_restart"
-        android:layout_width="wrap_content"
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Yeniden Başlat"/>
+        android:layout_margin="16dp"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#ad1457"
+        android:background="#b2dfdb"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></Chronometer>
 
     <GridView
         android:layout_width="match_parent"
@@ -27,5 +35,14 @@
         android:horizontalSpacing="35dp"
         android:gravity="center"
         android:layout_centerInParent="true" />
+
+    <Button
+        android:id="@+id/btn_restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gridView"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Yeniden Başlat" />
 
 </RelativeLayout>
