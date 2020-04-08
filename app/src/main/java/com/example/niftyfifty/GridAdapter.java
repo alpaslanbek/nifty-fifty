@@ -28,6 +28,8 @@ public class GridAdapter extends BaseAdapter {
     Chronometer chronometer;
     private boolean chronometerStarted = false;
     private int totalNumberPressed = 0;
+    private String val_playerLastScore;
+    private static final String actParam_PLAYERLASTSCORE = "PLAYER_LAST_SCORE";
     String[] gameOrder = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50"};
     //List<String> gameOrderList = new ArrayList<String>();
     List<String> playerPushOrderList = new ArrayList<String>();
@@ -74,12 +76,6 @@ public class GridAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     //Toast.makeText(context, "Item value: " + button.getText().toString(), Toast.LENGTH_SHORT).show();
                     totalNumberPressed++;
-                    if(!chronometerStarted) {
-                        chronometer.setBase(SystemClock.elapsedRealtime());
-                        chronometer.start();
-                        chronometerStarted = true;
-                    }
-
                     if(totalNumberPressed >= 70) {
                         chronometer.stop();
                         chronometer.setBase(SystemClock.elapsedRealtime());
@@ -87,17 +83,27 @@ public class GridAdapter extends BaseAdapter {
                     }
 
                     if(gameOrderList.get(0).equalsIgnoreCase(button.getText().toString())) {
+                        if(!chronometerStarted) {
+                            chronometer.setBase(SystemClock.elapsedRealtime());
+                            chronometer.start();
+                            chronometerStarted = true;
+                        }
+
                         if(gameOrderList.size() < 26) {
                             button.setBackgroundColor(Color.WHITE);
                         }
+
                         button.setText(last25Source.get(clickedPosition));
+
                         gameOrderList.remove(0);
                         if(gameOrderList.size() == 0) {
                             chronometer.stop();
-                            chronometer.setBase(SystemClock.elapsedRealtime());
+                            //chronometer.setBase(SystemClock.elapsedRealtime());
                             Toast.makeText(context, "Game finished successfully", Toast.LENGTH_SHORT).show();
-                            Intent gamePlatformActivity = new Intent(context, ResultsActivity.class);
-                            context.startActivity(gamePlatformActivity);
+                            Intent resultsActivity = new Intent(context, ResultsActivity.class);
+
+                            resultsActivity.putExtra(actParam_PLAYERLASTSCORE, "" + getPlayerLastScore()); // PASS PLAYERS LAST SCORE TO RESULTSACTIVITY pass val_playerLastScore HERE
+                            context.startActivity(resultsActivity);
                         }
                     }
                     //playerPushOrderList.add(button.getText().toString());
@@ -112,5 +118,9 @@ public class GridAdapter extends BaseAdapter {
 
     public boolean isGameFinished(List<String> gameOrderList, List<String> playerOrderList) {
         return playerOrderList.equals(gameOrderList);
+    }
+
+    public long getPlayerLastScore() {
+        return SystemClock.elapsedRealtime() - chronometer.getBase();
     }
 }

@@ -46,7 +46,6 @@ public class GamePlatformActivity extends AppCompatActivity implements View.OnCl
         //é a classe gridadapter
         adapter = new GridAdapter(lstGridSource,GamePlatformActivity.this, last25NumberList, chronometer);
         gridView.setAdapter(adapter);
-
     }
 
     @Override
