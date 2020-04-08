@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 try {
                                     gamePlatformActivity.putExtra("name", response.getJSONObject().getString("name"));
                                     //gamePlatformActivity.putExtra("birthday", response.getJSONObject().getString("birthday"));
-                                    //startActivity(gamePlatformActivity);
+                                        //startActivity(gamePlatformActivity);
                                     Toast.makeText(getApplicationContext(), "SUCCESSFUL LOGIN " + response.getJSONObject().getString("name"), Toast.LENGTH_LONG).show();
                                 } catch (JSONException e) {
                                     e.printStackTrace();

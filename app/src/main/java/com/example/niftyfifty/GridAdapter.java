@@ -64,12 +64,12 @@ public class GridAdapter extends BaseAdapter {
         final Button button;
         if(convertView == null) {
             button = new Button(context);
-            button.setWidth(60);
-            button.setHeight(60);
-            button.setLayoutParams(new GridView.LayoutParams(90,90));
+            //button.setWidth(80);
+            //button.setHeight(80);
+            //button.setLayoutParams(new GridView.LayoutParams(90,90));
             button.setPadding(8,8,8,8);
             button.setText(lstSource.get(position));
-            button.setTypeface(button.getTypeface(), Typeface.BOLD);
+            button.setTypeface(button.getTypeface(), Typeface.ITALIC);
             button.setTextColor(Color.parseColor("#f0f6f7"));
             button.setBackgroundColor(Color.BLUE);
             button.setOnClickListener(new View.OnClickListener(){

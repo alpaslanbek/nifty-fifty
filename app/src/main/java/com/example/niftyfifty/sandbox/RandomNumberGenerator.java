@@ -1,4 +1,4 @@
-package com.example.niftyfifty;
+package com.example.niftyfifty.sandbox;
 
 import java.util.ArrayList;
 import java.util.Random;

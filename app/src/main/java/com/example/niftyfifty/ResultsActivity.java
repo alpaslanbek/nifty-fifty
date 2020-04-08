@@ -1,17 +1,24 @@
 package com.example.niftyfifty;
 
-import androidx.annotation.RequiresApi;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.niftyfifty.fdao.FileSystemDataAccessObject;
+import com.example.niftyfifty.fileaccessobject.FileSystemDataAccessObject;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ResultsActivity extends AppCompatActivity {
 
@@ -29,6 +36,36 @@ public class ResultsActivity extends AppCompatActivity {
         projectName = getApplicationContext().getApplicationInfo().loadLabel(getApplicationContext().getPackageManager()).toString();
         fileSystemDataAccessObject = new FileSystemDataAccessObject(getApplicationContext());
 
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseApp fbApp = db.getApp();
+        String name = fbApp.getName();
+        Map<String, Object> user = new HashMap<>();
+        user.put("bestScore", "49124");
+        user.put("playerId", "2");
+
+
+
+        db.collection("users")
+                .add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("FIREBASE", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        Toast.makeText(getApplicationContext(), "Successfully added to Firebase", Toast.LENGTH_LONG).show();
+                        String ex = documentReference.getPath();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("FIREBASE", "Error adding document", e);
+                        Toast.makeText(getApplicationContext(), "Error adding to Firebase: " + e.toString(), Toast.LENGTH_LONG).show();
+                        String ex = e.toString();
+                    }
+                });
+
+
         String playerLastScore = getPlayerLastScore();
         updateBestScore(playerLastScore);
         tw_playerLastScore = (TextView) findViewById(R.id.tw_playerLastScore);
@@ -41,7 +78,7 @@ public class ResultsActivity extends AppCompatActivity {
 
         File directory = fileSystemDataAccessObject.getDirectory("niftyfifty.txt");
         if(directory != null) {
-            Toast.makeText(getApplicationContext(), "Directory is not null: " + directory.getPath(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Directory is not null: " + directory.getPath(), Toast.LENGTH_LONG).show();
         }
         File[] files = fileSystemDataAccessObject.getInternalFileData("niftyfifty.txt");
         fileSystemDataAccessObject.writeDataToFile("niftyfifty.txt", "Oguz");
@@ -84,5 +121,6 @@ public class ResultsActivity extends AppCompatActivity {
         // TD- CONVERT SCORES TO NUMBERS
         // TD- COMPARE LAST AND BEST SCORES TO UPDATE BEST SCORE
         // TD- WRITE PLAYER LAST SCORE AS BEST SCORE TO FILE AND SAVE IT
+        // TD- UPDATE FIREBASE DATABASE WITH PLAYER'S BESTSCORE
     }
 }
