@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "83760620311",
+    "firebase_url": "https://fifty-nifty.firebaseio.com",
+    "project_id": "fifty-nifty",
+    "storage_bucket": "fifty-nifty.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:83760620311:android:67ec3362eba004ffe38d52",
+        "android_client_info": {
+          "package_name": "com.example.niftyfifty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "83760620311-f1ie88is9klkvb28i68ejikd3jsg1h2p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7CVhpF_9Fz3a7w9C5mT_sJtB6HeUhYic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "83760620311-f1ie88is9klkvb28i68ejikd3jsg1h2p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
