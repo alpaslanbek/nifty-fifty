@@ -14,24 +14,23 @@
         android:id="@+id/chronometer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         android:textAlignment="center"
         android:gravity="center_horizontal"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#ad1457"
-        android:background="#b2dfdb"
+        android:textColor="#000000"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"></Chronometer>
 
     <GridView
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="300dp"
         android:id="@+id/gridView"
         android:numColumns="5"
-        android:verticalSpacing="5dp"
-        android:horizontalSpacing="5dp"
-        android:gravity="center"
+        android:verticalSpacing="2dp"
+        android:horizontalSpacing="2dp"
+        android:gravity="center_vertical|center_horizontal"
         android:layout_centerInParent="true" />
 
     <Button
@@ -41,6 +40,7 @@
         android:layout_below="@+id/gridView"
         android:gravity="center"
         android:layout_marginTop="20dp"
+        android:layout_centerInParent="true"
         android:text="Yeniden Başlat" />
 
 </RelativeLayout>

@@ -65,7 +65,6 @@ public class ResultsActivity extends AppCompatActivity {
                     }
                 });
 
-
         String playerLastScore = getPlayerLastScore();
         updateBestScore(playerLastScore);
         tw_playerLastScore = (TextView) findViewById(R.id.tw_playerLastScore);

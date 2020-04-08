@@ -69,14 +69,14 @@ public class GridAdapter extends BaseAdapter {
             //button.setLayoutParams(new GridView.LayoutParams(90,90));
             button.setPadding(8,8,8,8);
             button.setText(lstSource.get(position));
-            button.setTypeface(button.getTypeface(), Typeface.ITALIC);
+            button.setTypeface(button.getTypeface(), Typeface.BOLD);
             button.setTextColor(Color.parseColor("#f0f6f7"));
             button.setBackgroundColor(Color.BLUE);
             button.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v) {
                     //Toast.makeText(context, "Item value: " + button.getText().toString(), Toast.LENGTH_SHORT).show();
                     totalNumberPressed++;
-                    if(totalNumberPressed >= 70) {
+                    if(totalNumberPressed >= 60) {
                         chronometer.stop();
                         chronometer.setBase(SystemClock.elapsedRealtime());
                         Toast.makeText(context, "Too many clicks!!!", Toast.LENGTH_SHORT).show();
@@ -91,6 +91,7 @@ public class GridAdapter extends BaseAdapter {
 
                         if(gameOrderList.size() < 26) {
                             button.setBackgroundColor(Color.WHITE);
+                            button.setVisibility(View.GONE);
                         }
 
                         button.setText(last25Source.get(clickedPosition));
@@ -98,12 +99,15 @@ public class GridAdapter extends BaseAdapter {
                         gameOrderList.remove(0);
                         if(gameOrderList.size() == 0) {
                             chronometer.stop();
-                            //chronometer.setBase(SystemClock.elapsedRealtime());
+
                             Toast.makeText(context, "Game finished successfully", Toast.LENGTH_SHORT).show();
                             Intent resultsActivity = new Intent(context, ResultsActivity.class);
 
-                            resultsActivity.putExtra(actParam_PLAYERLASTSCORE, "" + getPlayerLastScore()); // PASS PLAYERS LAST SCORE TO RESULTSACTIVITY pass val_playerLastScore HERE
-                            context.startActivity(resultsActivity);
+                            //resultsActivity.putExtra(actParam_PLAYERLASTSCORE, "" + getPlayerLastScore()); // PASS PLAYERS LAST SCORE TO RESULTSACTIVITY pass val_playerLastScore HERE
+                            chronometer.setText("Your Score: " + getPlayerLastScore());
+                            //Toast.makeText(context, "Your Score:  " + (SystemClock.elapsedRealtime() - chronometer.getBase()), Toast.LENGTH_SHORT).show();
+                            //chronometer.setBase(SystemClock.elapsedRealtime());
+                            //context.startActivity(resultsActivity);
                         }
                     }
                     //playerPushOrderList.add(button.getText().toString());
@@ -120,7 +124,19 @@ public class GridAdapter extends BaseAdapter {
         return playerOrderList.equals(gameOrderList);
     }
 
-    public long getPlayerLastScore() {
-        return SystemClock.elapsedRealtime() - chronometer.getBase();
+    public String getPlayerLastScore() {
+        String unformattedPlayerScore = "" + (SystemClock.elapsedRealtime() - chronometer.getBase());
+        return formatScoreData(unformattedPlayerScore);
+    }
+
+    public String formatScoreData(String score) {
+        if(score != null) {
+            if(score.length() == 5) {
+                score = score.substring(0, 2) + "." + score.substring(2);
+            } else if(score.length() == 6) {
+                score = score.substring(0, 3) + "." + score.substring(3);
+            }
+        }
+        return score;
     }
 }
