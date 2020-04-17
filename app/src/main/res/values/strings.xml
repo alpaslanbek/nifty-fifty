@@ -2,4 +2,16 @@
     <string name="app_name">niftyfifty</string>
     <string name="facebook_app_id">523028671985149</string>
     <string name="fb_login_protocol_scheme">fb523028671985149</string>
+
+    <array name="renkler">
+        <item>Sarı</item>
+        <item>Kırmızı</item>
+        <item>Yeşil</item>
+        <item>Mavi</item>
+        <item>Mor</item>
+        <item>Beyaz</item>
+        <item>Siyah</item>
+        <item>Eflatun</item>
+        <item>Turuncu</item>
+    </array>
 </resources>

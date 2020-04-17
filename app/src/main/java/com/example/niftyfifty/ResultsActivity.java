@@ -65,10 +65,9 @@ public class ResultsActivity extends AppCompatActivity {
                     }
                 });
 
-        String playerLastScore = getPlayerLastScore();
-        updateBestScore(playerLastScore);
+
         tw_playerLastScore = (TextView) findViewById(R.id.tw_playerLastScore);
-        tw_playerLastScore.setText(tw_playerLastScore.getText() + playerLastScore);
+        tw_playerLastScore.setText(tw_playerLastScore.getText());
         tw_playerLastScore.setTypeface(tw_playerLastScore.getTypeface(), Typeface.BOLD);
 
         tw_playerBestScore = (TextView) findViewById(R.id.tw_playerBestScore);
@@ -92,27 +91,6 @@ public class ResultsActivity extends AppCompatActivity {
         } else {
             tw_playerBestScore.setText("FILE ARRAY NULL");
         }*/
-    }
-
-    public String getPlayerLastScore() {
-        String playerLastScore = null;
-        if(getIntent().getStringExtra(actParam_PLAYERLASTSCORE) != null) {
-            playerLastScore = getIntent().getStringExtra(actParam_PLAYERLASTSCORE);
-        } else {
-            Toast.makeText(getApplicationContext(), "Player Last Score is EMPTY!", Toast.LENGTH_SHORT).show();
-        }
-        return formatScoreData(playerLastScore);
-    }
-
-    public String formatScoreData(String score) {
-        if(score != null) {
-            if(score.length() == 5) {
-                score = score.substring(0, 2) + "." + score.substring(2);
-            } else if(score.length() == 6) {
-                score = score.substring(0, 3) + "." + score.substring(3);
-            }
-        }
-        return score;
     }
 
     public void updateBestScore(String playerLastScore) {

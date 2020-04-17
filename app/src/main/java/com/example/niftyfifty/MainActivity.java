@@ -3,12 +3,14 @@ package com.example.niftyfifty;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.niftyfifty.util.Util;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -30,11 +32,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     CallbackManager callbackManager = null;
     AccessToken accessToken = null;
     Button btn_guest = null;
+    Util util;
+    private static String pref_PLAYER_ID = "PLAYER_ID";
+    private static String act_PLAYER_ID = "PLAYER_ID";
+    private SharedPreferences pref = null;
+    private String playerId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        util = new Util();
 
         btn_guest = (Button) findViewById(R.id.btn_guest);
         btn_guest.setOnClickListener(this);
@@ -127,7 +136,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v == btn_guest) {
             Intent gamePlatformActivity = new Intent(MainActivity.this, GamePlatformActivity.class);
+            if(!isPlayerIdGenerated()) {
+                String playerId = util.generatePlayerId();
+                savePlayerId(playerId);
+                gamePlatformActivity.putExtra(act_PLAYER_ID, playerId);
+                //Toast.makeText(getApplicationContext(), "PlayerId Generated: " + playerId, Toast.LENGTH_SHORT).show();
+            } else {
+                playerId = getPlayerId();
+                gamePlatformActivity.putExtra(act_PLAYER_ID, playerId);
+                //Toast.makeText(getApplicationContext(), "PlayerId Saved: " + playerId, Toast.LENGTH_SHORT).show();
+            }
             startActivity(gamePlatformActivity);
         }
+    }
+
+    public String getPlayerId() {
+        String playerId;
+        pref = this.getSharedPreferences("MyPref", this.MODE_PRIVATE);
+        playerId = pref.getString(pref_PLAYER_ID, null);
+        return playerId;
+    }
+
+    public boolean isPlayerIdGenerated() {
+        boolean playerIdGenerated = true;
+        pref = this.getSharedPreferences("MyPref", this.MODE_PRIVATE);
+        String playerID = pref.getString(pref_PLAYER_ID, null);
+        if(playerID != null) {
+            return playerIdGenerated;
+        }
+        return false;
+    }
+
+    public void savePlayerId(String playerId) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(pref_PLAYER_ID, "" + playerId);
+        editor.commit();
     }
 }
